@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel Yönetimi</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="page-shell" id="loginView">
+      <section class="login-panel" aria-label="Giriş formu">
+        <div class="brand-mark" aria-hidden="true">
+          <span></span>
+        </div>
+
+        <div class="heading-group">
+          <p class="eyebrow">Hoş geldin</p>
+          <h1>Giriş Yap</h1>
+        </div>
+
+        <form class="login-form" id="loginForm" action="#" method="post">
+          <label for="name">İsim Soyisim</label>
+          <input id="name" name="name" type="text" autocomplete="name" placeholder="İsim ve soyisminizi yazın" required />
+
+          <label for="password">Şifre</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            placeholder="Şifrenizi yazın"
+            required
+          />
+
+          <p class="login-error" id="loginError" aria-live="polite"></p>
+
+          <div class="form-actions">
+            <button type="submit">Giriş Yap</button>
+            <a href="#" id="forgotPasswordLink">Şifremi unuttum</a>
+          </div>
+        </form>
+      </section>
+
+      <section class="visual-panel" aria-hidden="true">
+        <div class="visual-card">
+          <div class="orbital orbital-one"></div>
+          <div class="orbital orbital-two"></div>
+          <div class="key-shape">
+            <div class="key-ring"></div>
+            <div class="key-stem"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <main class="dashboard-shell" id="dashboardView" hidden>
+      <aside class="dashboard-sidebar" aria-label="Panel menüsü">
+        <div class="brand-row">
+          <div class="brand-mark small" aria-hidden="true"><span></span></div>
+          <strong>Yönetim</strong>
+        </div>
+
+        <nav class="side-nav">
+          <a class="active" href="#" id="panelsLink">Paneller</a>
+          <a href="#" id="usersLink">Kullanıcılar</a>
+          <a href="#" id="settingsLink">Ayarlar</a>
+          <a href="#" id="logoutLink">Çıkış Yap</a>
+        </nav>
+      </aside>
+
+      <section class="dashboard-main">
+        <section id="panelsSection">
+          <header class="dashboard-header">
+            <div>
+              <p class="eyebrow">Panel merkezi</p>
+              <h1>Panelleri Yönet</h1>
+              <p class="welcome-text">Hoş geldin, <strong id="userName">Kullanıcı</strong>.</p>
+            </div>
+
+            <button type="button">Yeni Panel</button>
+          </header>
+
+          <section class="summary-grid" aria-label="Panel özeti">
+            <article class="summary-card">
+              <span>Aktif Panel</span>
+              <strong>8</strong>
+            </article>
+            <article class="summary-card">
+              <span>Bekleyen İşlem</span>
+              <strong>3</strong>
+            </article>
+            <article class="summary-card">
+              <span>Bugünkü Giriş</span>
+              <strong>24</strong>
+            </article>
+          </section>
+
+          <section class="panel-list" aria-label="Yönetilen paneller">
+            <article class="managed-panel" data-access-area="sales">
+              <div>
+                <h2>Satış Paneli</h2>
+                <p>Gelir, sipariş ve ödeme akışını takip eder.</p>
+              </div>
+              <button class="panel-action" type="button">Yönet</button>
+            </article>
+
+            <article class="managed-panel" data-access-area="users">
+              <div>
+                <h2>Kullanıcı Paneli</h2>
+                <p>Üyeler, yetkiler ve profil ayarları burada yönetilir.</p>
+              </div>
+              <button class="panel-action" type="button" id="manageUsersButton">Yönet</button>
+            </article>
+
+            <article class="managed-panel" data-access-area="support">
+              <div>
+                <h2>Destek Paneli</h2>
+                <p>Mesajlar, talepler ve cevap durumları izlenir.</p>
+              </div>
+              <button class="panel-action" type="button">Yönet</button>
+            </article>
+          </section>
+        </section>
+
+        <section id="usersSection" hidden>
+          <header class="dashboard-header">
+            <div>
+              <p class="eyebrow">Kullanıcı paneli</p>
+              <h1>Üye İzinleri</h1>
+              <p class="welcome-text">Üyelerin hangi bölümlere erişip erişemeyeceğini buradan yönet.</p>
+            </div>
+            <div class="header-actions">
+              <button class="danger-button" type="button" id="deleteMemberButton">Üye Sil</button>
+              <button type="button" id="addMemberButton">Yeni Üye Ekle</button>
+            </div>
+          </header>
+
+          <section class="delete-toolbar" id="deleteToolbar" hidden>
+            <p>Silmek istediğin üyeleri seç.</p>
+            <button class="danger-button" type="button" id="confirmDeleteMembers">Seçilenleri Sil</button>
+          </section>
+
+          <section class="section-heading">
+            <div>
+              <h2>Erişim Yönetimi</h2>
+              <p>Butonlara basarak her üyenin panel erişimini açıp kapatabilirsin.</p>
+            </div>
+          </section>
+
+          <section class="permission-table-wrap" aria-label="Üye izinleri">
+            <table class="permission-table">
+              <thead>
+                <tr>
+                  <th class="select-column" id="selectColumnHeader" hidden>Seç</th>
+                  <th>Üye</th>
+                  <th>E-posta</th>
+                  <th>Şifre</th>
+                  <th>Satış Paneli</th>
+                  <th>Kullanıcı Paneli</th>
+                  <th>Destek Paneli</th>
+                  <th>Ayarlar</th>
+                </tr>
+              </thead>
+              <tbody id="permissionBody"></tbody>
+            </table>
+          </section>
+
+          <section class="section-heading">
+            <div>
+              <h2>Giriş Hareketleri</h2>
+              <p>Kimlerin, ne zaman ve hangi cihazdan giriş yaptığı burada görünür.</p>
+            </div>
+          </section>
+
+          <section class="activity-table-wrap" aria-label="Kullanıcı giriş kayıtları">
+            <table class="activity-table">
+              <thead>
+                <tr>
+                  <th>Kim Girdi</th>
+                  <th>Giriş Zamanı</th>
+                  <th>Hangi Bilgisayardan</th>
+                  <th>Kimin Adına</th>
+                </tr>
+              </thead>
+              <tbody id="loginHistoryBody">
+                <tr>
+                  <td colspan="4">Henüz giriş kaydı yok.</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+        </section>
+
+        <section id="settingsSection" hidden>
+          <header class="dashboard-header">
+            <div>
+              <p class="eyebrow">Sistem ayarları</p>
+              <h1>Ayarlar</h1>
+              <p class="welcome-text">E-posta gönderim ayarlarını buradan düzenleyebilirsin.</p>
+            </div>
+            <button type="submit" form="mailSettingsForm" id="saveMailSettings">Kaydet</button>
+          </header>
+
+          <section class="mail-settings" aria-label="E-posta ayarları">
+            <h2>Genel</h2>
+
+            <form class="mail-settings-form" id="mailSettingsForm">
+              <div class="settings-row">
+                <label for="mailEngine">E-Posta Motoru <span class="help-dot">?</span></label>
+                <select id="mailEngine" name="mailEngine">
+                  <option selected>SMTP Mail</option>
+                  <option>PHP Mail</option>
+                  <option>Sendmail</option>
+                </select>
+              </div>
+
+              <div class="settings-row">
+                <label for="mailParameters">Posta Parametreleri <span class="help-dot">?</span></label>
+                <input id="mailParameters" name="mailParameters" type="text" placeholder="Posta Parametreleri" />
+              </div>
+
+              <div class="settings-row">
+                <label for="smtpHost">SMTP Host Adı <span class="help-dot">?</span></label>
+                <input id="smtpHost" name="smtpHost" type="text" value="ssl://smtp.gmail.com" />
+              </div>
+
+              <div class="settings-row">
+                <label for="smtpUser">SMTP Kullanıcı Adı</label>
+                <input id="smtpUser" name="smtpUser" type="text" placeholder="SMTP Kullanıcı Adı" />
+              </div>
+
+              <div class="settings-row">
+                <label for="smtpPassword">SMTP Parola <span class="help-dot">?</span></label>
+                <input id="smtpPassword" name="smtpPassword" type="password" placeholder="SMTP Parola" />
+              </div>
+
+              <div class="settings-row">
+                <label for="smtpPort">SMTP Port</label>
+                <input id="smtpPort" name="smtpPort" type="number" value="465" />
+              </div>
+
+              <div class="settings-row">
+                <label for="smtpTimeout">SMTP Zaman Aşımı</label>
+                <input id="smtpTimeout" name="smtpTimeout" type="number" value="25" />
+              </div>
+
+              <h2>Mail Alerts</h2>
+
+              <div class="settings-row settings-row-top">
+                <label>Uyarı Mesajları <span class="help-dot">?</span></label>
+                <div class="alert-box">
+                  <label><input name="alertNewCustomer" type="checkbox" /> Yeni Müşteri</label>
+                  <label><input name="alertNewPartner" type="checkbox" /> Yeni Ortak</label>
+                  <label><input name="alertNewOrder" type="checkbox" checked /> Yeni Sipariş</label>
+                  <label><input name="alertReview" type="checkbox" /> Değerlendirme</label>
+                </div>
+              </div>
+
+              <div class="settings-row settings-row-top">
+                <label for="extraAlertEmails">İlave Uyarı E-Posta Adresleri <span class="help-dot">?</span></label>
+                <textarea
+                  id="extraAlertEmails"
+                  name="extraAlertEmails"
+                  placeholder="İlave Uyarı E-Posta Adresleri"
+                ></textarea>
+              </div>
+
+              <p class="settings-save-message" id="mailSettingsMessage" aria-live="polite"></p>
+            </form>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <div class="member-modal" id="memberModal" hidden>
+      <form class="member-form-panel" id="addMemberForm">
+        <div class="modal-header">
+          <div>
+            <p class="eyebrow">Yeni kayıt</p>
+            <h2>Yeni Üye Ekle</h2>
+          </div>
+          <button class="ghost-button" type="button" id="closeMemberForm">Kapat</button>
+        </div>
+
+        <div class="member-form-grid">
+          <label for="memberFirstName">
+            İsim
+            <input id="memberFirstName" name="firstName" type="text" placeholder="Üyenin ismi" required />
+          </label>
+
+          <label for="memberLastName">
+            Soyisim
+            <input id="memberLastName" name="lastName" type="text" placeholder="Üyenin soyismi" required />
+          </label>
+
+          <label for="memberEmail">
+            E-posta
+            <input id="memberEmail" name="memberEmail" type="email" placeholder="uye@mail.com" required />
+          </label>
+
+          <label for="memberPassword">
+            Şifre
+            <span class="password-create-row">
+              <input
+                id="memberPassword"
+                name="memberPassword"
+                type="text"
+                placeholder="Üyenin giriş şifresi"
+                required
+              />
+              <button class="ghost-button" type="button" id="generatePasswordButton">Şifre Oluştur</button>
+            </span>
+          </label>
+        </div>
+
+        <p class="form-message" id="memberFormMessage" aria-live="polite"></p>
+        <button type="submit">Ekle</button>
+      </form>
+    </div>
+
+    <div class="confirm-modal" id="deleteConfirmModal" hidden>
+      <section class="confirm-panel" role="dialog" aria-modal="true" aria-labelledby="deleteConfirmTitle">
+        <div class="modal-header">
+          <div>
+            <p class="eyebrow">Silme onayı</p>
+            <h2 id="deleteConfirmTitle">Emin misiniz?</h2>
+          </div>
+        </div>
+
+        <p>Bu değişiklikler geri alınamayacak.</p>
+
+        <div class="confirm-actions">
+          <button class="ghost-button" type="button" id="cancelDeleteMembers">Vazgeç</button>
+          <button class="danger-button" type="button" id="approveDeleteMembers">Evet, Sil</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="reset-modal" id="forgotPasswordModal" hidden>
+      <form class="reset-panel" id="forgotPasswordForm">
+        <div class="modal-header">
+          <div>
+            <p class="eyebrow">Şifre sıfırlama</p>
+            <h2>Mail Adresi Gir</h2>
+          </div>
+          <button class="ghost-button" type="button" id="closeForgotPassword">Kapat</button>
+        </div>
+
+        <label for="resetEmail">
+          E-posta
+          <input id="resetEmail" name="resetEmail" type="email" placeholder="mail adresinizi yazın" required />
+        </label>
+
+        <p class="form-message" id="forgotPasswordMessage" aria-live="polite"></p>
+        <button type="submit">Bağlantı Gönder</button>
+      </form>
+    </div>
+
+    <div class="reset-modal" id="resetPasswordModal" hidden>
+      <form class="reset-panel" id="resetPasswordForm">
+        <div class="modal-header">
+          <div>
+            <p class="eyebrow">Yeni şifre</p>
+            <h2>Şifreni Değiştir</h2>
+          </div>
+          <button class="ghost-button" type="button" id="closeResetPassword">Kapat</button>
+        </div>
+
+        <label for="newPassword">
+          Yeni Şifre
+          <input id="newPassword" name="newPassword" type="password" placeholder="Yeni şifreyi yazın" required />
+        </label>
+
+        <label for="confirmNewPassword">
+          Yeni Şifre Tekrar
+          <input
+            id="confirmNewPassword"
+            name="confirmNewPassword"
+            type="password"
+            placeholder="Yeni şifreyi tekrar yazın"
+            required
+          />
+        </label>
+
+        <p class="form-message error-message" id="resetPasswordMessage" aria-live="polite"></p>
+        <button type="submit">Şifreyi Değiştir</button>
+      </form>
+    </div>
+
+    <div class="confirm-modal" id="resetSuccessModal" hidden>
+      <section class="confirm-panel reset-success-panel" role="status" aria-live="polite">
+        <div>
+          <p class="eyebrow">Tamamlandı</p>
+          <h2>Şifreniz değiştirildi</h2>
+        </div>
+        <p>Giriş ekranına yönlendiriliyorsunuz.</p>
+      </section>
+    </div>
+
+    <button class="suggestion-bubble" type="button" id="suggestionBubble">Öneri</button>
+
+    <div class="suggestion-modal" id="suggestionModal" hidden>
+      <form class="suggestion-panel" id="suggestionForm">
+        <div class="modal-header">
+          <div>
+            <p class="eyebrow">Geri bildirim</p>
+            <h2>Öneri Gönder</h2>
+          </div>
+          <button class="ghost-button" type="button" id="closeSuggestionForm">Kapat</button>
+        </div>
+
+        <label for="suggestionName">
+          İsim Soyisim
+          <input id="suggestionName" name="suggestionName" type="text" placeholder="İsim soyisim" required />
+        </label>
+
+        <label for="suggestionEmail">
+          E-Posta
+          <input id="suggestionEmail" name="suggestionEmail" type="email" placeholder="mail adresiniz" required />
+        </label>
+
+        <label for="suggestionSubject">
+          Konu
+          <input id="suggestionSubject" name="suggestionSubject" type="text" placeholder="Konu" required />
+        </label>
+
+        <label for="suggestionMessageInput">
+          Mesaj
+          <textarea
+            id="suggestionMessageInput"
+            name="suggestionMessageInput"
+            placeholder="Mesajınızı yazın"
+            required
+          ></textarea>
+        </label>
+
+        <p class="form-message" id="suggestionFormMessage" aria-live="polite"></p>
+        <button type="submit">Gönder</button>
+      </form>
+    </div>
+  </body>
+</html>
